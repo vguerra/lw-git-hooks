@@ -1,0 +1,5 @@
+#!/bin/sh
+
+CURRENT=`lw-current`
+git checkout development
+git branch -d $CURRENT

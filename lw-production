@@ -1,0 +1,19 @@
+#!/bin/sh
+
+#set -e
+CURRENT=`lw-current`
+STAG_LOG=`git cherry -v staging | grep -i ^\+`
+if [ -n "$STAG_LOG" ]
+then 
+    echo ""
+    echo "Prohibited to merge into production!"
+    echo "Some commits are not merged into staging:"
+    echo ""
+    echo "$STAG_LOG"
+    exit
+fi
+lw-sync
+git checkout production
+git merge $CURRENT
+git push 
+git checkout $CURRENT

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo "Setting up your learn@WU development cycle environment" 
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo "Adjusting your enviroment variables"
+
+PROFILE="$(eval echo ~)/.bash_profile"
+echo "" >> $PROFILE
+echo "### section added automatically by git-aliases on $(date +%Y-%m-%d)" >> $PROFILE
+echo "PATH=\$PATH:${DIR}" >> $PROFILE
+echo "export PATH" >> $PROFILE
+echo "### end of section" >> $PROFILE
+echo "" >> $PROFILE
+
+export PATH=$PATH:$DIR
+
+echo "Adding git aliasses"
+git config --global alias.new "!${DIR}/lw-new \$1"
+git config --global alias.st status
+git config --global alias.log-commits "!${DIR}/lw-log"
+git config --global alias.staging "!${DIR}/lw-staging"
+git config --global alias.production "!${DIR}/lw-production"
+git config --global alias.sync "!${DIR}/lw-sync"
+git config --global alias.squash "!${DIR}/lw-squash"
+
+echo "Done! Happy hacking!"

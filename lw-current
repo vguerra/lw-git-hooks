@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+BRANCH=`git branch | grep '\*' | awk '{print $2}'`
+if [ "$BRANCH" == "production" ] || [ "$BRANCH" == "staging" ]; then
+    #echo "Syncronization is not supposed to be invoked from productior nor staging!"
+    BRANCH=""
+    #exit 1
+fi
+echo $BRANCH 

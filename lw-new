@@ -1,0 +1,8 @@
+#!/bin/sh
+if [ "$#" -ne 1 ]; then 
+	echo "Wrong syntax, should be: git new <new-branch>"
+	exit 1
+fi
+git checkout production
+git pull --rebase
+git checkout -b $1 production

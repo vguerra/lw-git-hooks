@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# this merge your commits from the current branch
+# to the staging branch
+
+CURRENT=`lw-current`
+lw-sync
+git checkout staging
+git pull --rebase
+
+# maybe this specific merge into staging has to 
+# be a cherry picking ( list the commits id between 
+# production and $CURRENT and apply them to staging ).
+git merge $CURRENT
+# as soon as the branch chaged we publish it
+git push 
+git checkout $CURRENT

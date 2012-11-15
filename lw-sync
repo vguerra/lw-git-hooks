@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+CURRENT=`lw-current`
+if [ "$CURRENT" == "" ]; then
+    echo "Syncronization can not be executed from production or staging branches."
+    exit -1
+fi
+CURR_STASHES=`git stash list|wc -l`
+git stash save "stashed by lw-sync"
+git checkout production
+git pull --rebase
+
+git checkout staging 
+git pull --rebase
+
+
+git checkout $CURRENT
+git rebase production
+STASHES=`git stash list|wc -l`
+if [ $STASHES -ne $CURR_STASHES ]; then
+    echo "Unstashing your previous unstagged work"
+    git stash pop
+else
+    echo "Nothing to pop from stash list"
+fi

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+STAG_LOG=`git cherry -v staging | grep -i ^\+`
+if [ -z "$STAG_LOG" ]
+then 
+    STAG_LOG="x"
+fi
+count=0
+git cherry -v production | grep -i ^\+ | while read line; do
+    tag="(stag)"
+    if echo "$STAG_LOG" | grep -q ".*$line.*"
+        then
+        tag="      "
+    fi
+    count=$((count+1)) 
+    echo "$count. $tag $line" 
+done 
+#| tac
+

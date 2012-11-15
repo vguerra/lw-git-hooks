@@ -1,0 +1,11 @@
+#!/bin/sh
+
+CURRENT=`lw-current`
+lw-sync 
+NUMBER=`git log --pretty=oneline production.. | wc -l`
+if [ $NUMBER -lt 2 ]; then 
+	echo "You have just $NUMBER  commits, there is nothing to squash"
+else
+	echo "number is $NUMBER so rebase"
+	git rebase -i HEAD~$NUMBER
+fi
